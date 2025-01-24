@@ -1,0 +1,127 @@
+@startuml
+
+class LoginFrame {
+    +refresh()
+    +go_to_register()
+    +login()
+}
+
+class RegisterFrame {
+    +refresh()
+    +go_to_login()
+    +register_user()
+}
+
+class UserDashboardFrame {
+    +refresh_user_data()
+    +rent_book()
+    +manage_rent_books()
+    +manage_reserved_books()
+}
+
+class AdminDashboardFrame {
+    +refresh_user_data()
+    +manage_editorial()
+    +manage_books()
+    +add_book()
+    +manage_users()
+}
+
+class ManageBooksFrame {
+    +refresh()
+    +book_selected()
+    +add_book()
+    +edit_book()
+    +delete_book()
+    +go_back()
+}
+
+class ViewBookFrame {
+    +refresh()
+    +go_back()
+    +rent_book()
+    +reserve_book()
+}
+
+class EditBookFrame {
+    +refresh()
+    +edit_book()
+    +go_back()
+}
+
+class AddBookFrame {
+    +refresh()
+    +add_new_book()
+    +go_back()
+}
+
+class ListBooksUserMode {
+    +refresh()
+    +book_selected()
+    +rent_book()
+    +reserve_book()
+    +go_back()
+}
+
+class ViewBookFrameUserMode {
+    +refresh()
+    +rent_book()
+    +reserve_book()
+    +go_back()
+}
+
+class ManageUsersFrame {
+    +update_content()
+    +refresh_user_list()
+    +update_user_list()
+    +add_user()
+    +edit_user()
+    +view_user()
+    +delete_user()
+}
+
+class ViewUserFrame {
+    +refresh_user()
+    +go_back()
+    +rent_books()
+    +view_reservations()
+}
+
+class ViewRentFrame {
+    +refresh()
+    +go_back()
+}
+
+class ViewReservationFrame {
+    +refresh()
+    +go_back()
+}
+
+class EditUserFrame {
+    +refresh()
+    +save_user()
+    +go_back()
+}
+
+class AddUserFrame {
+    +create_user()
+    +go_back()
+}
+
+LoginFrame --> RegisterFrame
+LoginFrame --> UserDashboardFrame
+LoginFrame --> AdminDashboardFrame
+AdminDashboardFrame --> ManageBooksFrame
+AdminDashboardFrame --> ManageUsersFrame
+ManageBooksFrame --> ViewBookFrame
+ManageBooksFrame --> EditBookFrame
+ManageBooksFrame --> AddBookFrame
+UserDashboardFrame --> ListBooksUserMode
+ListBooksUserMode --> ViewBookFrameUserMode
+ManageUsersFrame --> ViewUserFrame
+ManageUsersFrame --> EditUserFrame
+ManageUsersFrame --> AddUserFrame
+ViewUserFrame --> ViewRentFrame
+ViewUserFrame --> ViewReservationFrame
+
+@enduml

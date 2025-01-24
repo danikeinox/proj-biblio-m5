@@ -1,0 +1,48 @@
+@startuml
+
+actor Usuario
+actor Administrador
+
+Usuario -> LoginFrame : Iniciar sesión
+LoginFrame -> Database : Verificar credenciales
+LoginFrame -> UsuarioDashboardFrame : Mostrar dashboard de usuario
+LoginFrame -> AdminDashboardFrame : Mostrar dashboard de administrador
+
+Usuario -> RegisterFrame : Registrarse
+RegisterFrame -> Database : Guardar nuevo usuario
+
+Usuario -> UserDashboardFrame : Alquilar libro
+UserDashboardFrame -> ListBooksUserMode : Mostrar lista de libros
+ListBooksUserMode -> ViewBookFrameUserMode : Ver detalles del libro
+ViewBookFrameUserMode -> Database : Registrar alquiler
+
+Usuario -> UserDashboardFrame : Ver libros alquilados
+UserDashboardFrame -> ListRentedBooks : Mostrar libros alquilados
+
+Usuario -> UserDashboardFrame : Ver libros reservados
+UserDashboardFrame -> ListReservedBooks : Mostrar libros reservados
+
+Usuario -> UserDashboardFrame : Reservar libro
+UserDashboardFrame -> ListBooksUserMode : Mostrar lista de libros
+ListBooksUserMode -> ViewBookFrameUserMode : Ver detalles del libro
+ViewBookFrameUserMode -> Database : Registrar reserva
+
+Administrador -> AdminDashboardFrame : Gestionar libros
+AdminDashboardFrame -> ManageBooksFrame : Mostrar gestión de libros
+ManageBooksFrame -> AddBookFrame : Añadir libro
+ManageBooksFrame -> EditBookFrame : Editar libro
+ManageBooksFrame -> Database : Eliminar libro
+
+Administrador -> AdminDashboardFrame : Gestionar editoriales
+AdminDashboardFrame -> ManageEditorialsFrame : Mostrar gestión de editoriales
+ManageEditorialsFrame -> AddEditorialFrame : Añadir editorial
+ManageEditorialsFrame -> EditEditorialFrame : Editar editorial
+ManageEditorialsFrame -> Database : Eliminar editorial
+
+Administrador -> AdminDashboardFrame : Gestionar usuarios
+AdminDashboardFrame -> ManageUsersFrame : Mostrar gestión de usuarios
+ManageUsersFrame -> AddUserFrame : Añadir usuario
+ManageUsersFrame -> EditUserFrame : Editar usuario
+ManageUsersFrame -> Database : Eliminar usuario
+
+@enduml

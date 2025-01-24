@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="SqlDialectMappings">
+    <file url="file://$APPLICATION_CONFIG_DIR$/consoles/db/a8f6e815-ba4e-4150-8c52-ffcb36d89c95/console.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/classes/books.py" dialect="GenericSQL" />
+    <file url="file://$PROJECT_DIR$/classes/editorial.py" dialect="GenericSQL" />
+    <file url="file://$PROJECT_DIR$/main.py" dialect="GenericSQL" />
+  </component>
+</project>
