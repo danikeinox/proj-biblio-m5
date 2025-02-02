@@ -2,3 +2,7 @@ pip~=23.2.1
 wheel~=0.41.2
 mysql-connector-python~=9.1.0
 python-dotenv~=1.0.1
+PySimpleGUI~=5.0.6
+psycopg2~=2.9.9
+rsa~=4.9
+pyasn1~=0.6.1
