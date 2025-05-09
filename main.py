@@ -1,7 +1,7 @@
 import tkinter as tk
 from classes.login import LoginFrame
-from classes.register import RegisterFrame
-from classes.user import ViewUserFrame, ManageUsersFrame
+from classes.user import ViewUserFrame, ManageUsersFrame, AddUserFrame, EditUserFrame, ViewReservationFrame, \
+    ViewRentFrame
 from classes.database import connect_db
 from datetime import datetime, timedelta
 
@@ -10,7 +10,7 @@ class MainApplication(tk.Tk):
     def __init__(self):
         super().__init__()
         self.title("Gestor de Llibreries de Daniel")
-        self.geometry("800x600")
+        self.geometry("1000x600")
         self.container = tk.Frame(self)
         self.container.pack(fill="both", expand=True)
 
@@ -166,6 +166,7 @@ class MainApplication(tk.Tk):
         self.frames = {}  # 🟢 Elimina todos los frames almacenados para evitar datos en caché
 
         self.show_frame(LoginFrame)  # 🟢 Vuelve a la pantalla de login
+
     @staticmethod
     def get_user_by_id(user_id):
         """Devuelve la información del usuario desde la base de datos."""
@@ -195,7 +196,7 @@ class MainApplication(tk.Tk):
 
         # Busca editorial por id
         cursor.execute(
-            "SELECT id, name, address, phone, username, website, country, city, postal_code FROM editorial WHERE id = %s",
+            "SELECT id, name, address, phone, email, website, country, city, postal_code FROM editorial WHERE id = %s",
             (editorial_id,))
         result = cursor.fetchone()
         conn.close()
@@ -206,7 +207,7 @@ class MainApplication(tk.Tk):
                 "name": result[1],
                 "address": result[2],
                 "phone": result[3],
-                "username": result[4],
+                "email": result[4],
                 "website": result[5],
                 "country": result[6],
                 "city": result[7],
@@ -253,7 +254,9 @@ class MainApplication(tk.Tk):
             self.frames[frame_class].pack(fill="both", expand=True)
 
         # Si se está accediendo a ViewUserFrame con un user_id, se crea un nuevo frame
-        if frame_class == ViewUserFrame and args:
+        if (frame_class == ViewUserFrame and args or frame_class == ViewUserFrame and args or frame_class ==
+                EditUserFrame and args or frame_class == AddUserFrame and args or frame_class == ViewReservationFrame
+                and args or frame_class == ViewRentFrame and args):
             if frame_class in self.frames:
                 self.frames[frame_class].destroy()  # Eliminar el frame anterior
             frame = frame_class(self.container, self, *args)
@@ -281,6 +284,9 @@ class MainApplication(tk.Tk):
 
         if hasattr(frame, "refresh_editorial_data"):
             frame.refresh_editorial_data()
+
+        if hasattr(frame, "refresh_book_data"):
+            frame.refresh_book_data(book_id=args[0] if args else None)
         frame.tkraise()
 
 

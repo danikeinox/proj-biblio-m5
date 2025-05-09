@@ -1,10 +1,9 @@
 import tkinter as tk
 from tkinter import messagebox, ttk
 from classes.database import connect_db
-from classes.books import ManageBooksFrame
-from classes.editorial import ManageEditorialsFrame
-from classes.user import ManageUsersFrame, ViewUserFrame, AddUserFrame, EditUserFrame, ViewReservationFrame, \
-    ViewRentFrame
+from classes.books.Admin.ManageBooksFrame import ManageBooksFrame
+from classes.editorial.ManageEditorialsFrame import ManageEditorialsFrame
+from classes.user.ManageUsersFrame import ManageUsersFrame
 
 
 class AdminDashboardFrame(tk.Frame):
@@ -19,6 +18,8 @@ class AdminDashboardFrame(tk.Frame):
         tk.Button(self, text="Gestionar Usuaris", command=self.manage_users, font=("Arial", 14)).pack(pady=10)
         tk.Button(self, text="Tancar Sessió", command=self.controller.logout, font=("Arial", 14)).pack(pady=10)
 
+        self.refresh_user_data()
+
     def refresh_user_data(self):
         if not self.controller.current_user:
             messagebox.showerror("Error", "Sessió no iniciada. Torna a iniciar sessió.")
@@ -27,6 +28,21 @@ class AdminDashboardFrame(tk.Frame):
         self.name = self.controller.current_user[1]
         for widget in self.winfo_children():
             widget.destroy()
+
+        # Limpia los Eventos activos
+        self.bind_all("<Double-1>", lambda e: None)
+        self.bind_all("<Return>", lambda e: None)
+        self.bind_all("<space>", lambda e: None)
+        self.bind_all("<Delete>", lambda e: None)
+        self.bind_all("<Escape>", lambda e: None)
+
+        # Limpia eventos específicos del Treeview (si existe)
+        if hasattr(self, "tree"):
+            self.tree.unbind("<Double-1>")
+            self.tree.unbind("<Return>")
+            self.tree.unbind("<space>")
+            self.tree.unbind("<Delete>")
+
         tk.Label(self, text=f"Benvingut Administrador: {self.name}", font=("Arial", 18)).pack(pady=20)
         tk.Button(self, text="Gestionar editorial", command=self.manage_editorial, font=("Arial", 14)).pack(pady=10)
         tk.Button(self, text="Gestionar llibres", command=self.manage_books, font=("Arial", 14)).pack(pady=10)
