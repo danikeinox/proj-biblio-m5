@@ -133,22 +133,23 @@ class ManageUsersFrame(tk.Frame):
                 if not confirm:
                     return
 
-            cursor.execute("SELECT COUNT(*) FROM rents WHERE user_id = %s", (user_id,))
-            if cursor.fetchone()[0] > 0:
-                messagebox.showwarning("Atenció", "Aquest usuari té llibres alquilats.")
-                confirm = messagebox.askyesno("Confirmar", "Vols eliminar-lo igualment?")
-                if confirm:
-                    cursor.execute("DELETE FROM rents WHERE user_id = %s", (user_id,))
-                    conn.commit()
+            # Delete dependent rows in the `returns` table
+            cursor.execute("SELECT id FROM rents WHERE user_id = %s", (user_id,))
+            rents = cursor.fetchall()
+            for rent in rents:
+                rent_id = rent[0]
+                cursor.execute("DELETE FROM returns WHERE rent_id = %s", (rent_id,))
+                conn.commit()
 
-            cursor.execute("SELECT COUNT(*) FROM reservations WHERE user_id = %s", (user_id,))
-            if cursor.fetchone()[0] > 0:
-                messagebox.showwarning("Atenció", "Aquest usuari té reserves associades.")
-                confirm = messagebox.askyesno("Confirmar", "Vols eliminar-lo igualment?")
-                if confirm:
-                    cursor.execute("DELETE FROM reservations WHERE user_id = %s", (user_id,))
-                    conn.commit()
+            # Delete rows in the `rents` table
+            cursor.execute("DELETE FROM rents WHERE user_id = %s", (user_id,))
+            conn.commit()
 
+            # Delete rows in the `reservations` table
+            cursor.execute("DELETE FROM reservations WHERE user_id = %s", (user_id,))
+            conn.commit()
+
+            # Delete the user
             cursor.execute("DELETE FROM users WHERE id = %s", (user_id,))
             conn.commit()
             conn.close()

@@ -9,8 +9,20 @@ from classes.user.ViewReservationFrame import ViewReservationFrame
 class ViewUserFrame(tk.Frame):
     def __init__(self, parent, controller, user_id=None):
         super().__init__(parent)
-        self.controller = controller
         self.user_id = user_id
+        self.controller = controller
+
+        # Si se proporciona un user_id, refresca la vista
+        self.refresh()
+
+    def refresh(self, user_id=None):
+
+        if user_id:
+            self.user_id = user_id
+
+        """Refresca la vista del usuario."""
+        for widget in self.winfo_children():
+            widget.destroy()
 
         tk.Label(self, text="Informació de l'Usuari", font=("Arial", 18)).pack(pady=10)
 
@@ -33,9 +45,6 @@ class ViewUserFrame(tk.Frame):
         tk.Button(self, text="Reserves", command=self.view_reservations, font=("Arial", 14)).pack(pady=5)
         tk.Button(self, text="Tornar", command=self.go_back, font=("Arial", 14)).pack(pady=10)
 
-        # Si se proporciona un user_id, refresca la vista
-        self.refresh_user()
-
         # 🟢 Bindings para eventos
         self.bind_all("<Double-1>", lambda e: None)
         self.bind_all("<Return>", lambda e: None)
@@ -49,10 +58,6 @@ class ViewUserFrame(tk.Frame):
             self.tree.unbind("<Return>")
             self.tree.unbind("<space>")
             self.tree.unbind("<Delete>")
-
-    def refresh_user(self):
-        """Actualiza la información del usuario en la vista."""
-        self.tree.delete(*self.tree.get_children())  # Limpiar datos previos
 
         if not self.user_id:
             messagebox.showerror("Error", "No hi ha cap usuari seleccionat.")
