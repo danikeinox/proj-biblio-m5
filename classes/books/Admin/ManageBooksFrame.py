@@ -133,7 +133,6 @@ class ManageBooksFrame(tk.Frame):
 
     def add_book(self):
         # Navegar al frame para añadir libro
-        from classes.books import AddBookFrame
         self.controller.show_frame(AddBookFrame)
 
     def edit_book(self):

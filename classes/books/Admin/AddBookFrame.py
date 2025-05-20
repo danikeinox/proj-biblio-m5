@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import messagebox, ttk
 from classes.database import connect_db
+from classes.books.Admin.EditBookFrame import EditBookFrame
 
 
 class AddBookFrame(tk.Frame):
@@ -29,7 +30,7 @@ class AddBookFrame(tk.Frame):
         tk.Button(self, text="Tornar", command=self.go_back, font=("Arial", 14)).pack()
 
         # Load genres and editorials into the Comboboxes
-        load_genres_and_editorials(self)
+        EditBookFrame.load_genres_and_editorials(self)
 
         # 🟢 Bindings para eventos
         self.bind_all("<Double-1>", lambda e: None)

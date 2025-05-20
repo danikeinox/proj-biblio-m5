@@ -55,6 +55,7 @@ class EditBookFrame(tk.Frame):
         # Cargar géneros y editoriales en los Comboboxes
         self.load_genres_and_editorials()
 
+    @staticmethod
     def load_genres_and_editorials(self):
 
         """Loads genres and editorials in a single query to optimize performance."""
@@ -82,6 +83,7 @@ class EditBookFrame(tk.Frame):
         editorial_widget = self.fields["editorial"][1]
         editorial_widget["values"] = self.editorials
 
+    @staticmethod
     def load_book_data(self):
 
         """Loads book details, genre, and editorial in a single query."""
